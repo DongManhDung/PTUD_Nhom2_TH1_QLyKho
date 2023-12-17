@@ -25,6 +25,8 @@ if ($mysqli->connect_errno) {
     <script src="https://kit.fontawesome.com/a8954462a8.js" crossorigin="anonymous"></script>
     <!-- Add favicon -->
     <link rel="shortcut icon" href="static/img/favicon1.png" type="image/x-icon">
+
+    
 </head>
 <body>
     <div class="header">
@@ -56,7 +58,7 @@ if ($mysqli->connect_errno) {
                                     </ul>
                             </ul>
 
-                        <li><i class="fa-solid fa-clipboard"></i><a href="#">Phiếu nhập xuất</a></li>
+                        <li><i class="fa-solid fa-clipboard"></i><a href="index.php?page_layout=phieunhapxuat">Phiếu nhập xuất</a></li>
                         <ul class="navbar_fix1">
                             <li><a href="index.php?page_layout=phieunhapnvl">Phiếu nhập nguyên vật liệu</a></li>
                             <li><a href="index.php?page_layout=phieunhapsp">Phiếu nhập sản phẩm</a></li>
@@ -85,7 +87,7 @@ if ($mysqli->connect_errno) {
                                 <li><a href="index.php?page_layout=xoanhanvien">Xóa nhân viên</a></li>
                                 <li><a href="index.php?page_layout=suanhanvien">Sửa nhân viên</a></li>
                             </ul>
-                        <li><i class="fa-solid fa-boxes-stacked"></i><a href="">Nguyên vật liệu</a></li>
+                        <li><i class="fa-solid fa-boxes-stacked"></i><a href="index.php?page_layout=danhsachnguyenvatlieu">Nguyên vật liệu</a></li>
 
                         <li><i class="fa-solid fa-tag"></i><a href="index.php?page_layout=timkiemsanpham">Sản phẩm</a></li>
 
@@ -104,15 +106,6 @@ if ($mysqli->connect_errno) {
                         <h1>Danh sách kho nhà máy</h1>
                     </div>
                     
-                    <div class="search_warehouse">
-                        <div class="search_warehouse_inner">
-                        <form action="" method="POST" style="width:100%;display:inline-flex;justify-content:right">
-                            <h3>Nhập mã kho tìm kiếm:</h3>
-                            <input type="text" method="POST" name="MaKhoCanTim" placeholder="Mã kho: ">
-                            <button name="search" style="margin-left:1rem;width:10%;font-size:20px;border-radius:5px;cursor:pointer" method="POST">Tìm kiếm</button>
-                            </form>
-                        </div>
-                    </div>
                     
                     <table border="1" class="warehouse_table">
                         <thead>
@@ -155,5 +148,6 @@ if ($mysqli->connect_errno) {
             </div>
         </div>
     </div>
+    
 </body>
 </html>

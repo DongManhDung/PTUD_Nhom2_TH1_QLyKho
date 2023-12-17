@@ -27,123 +27,127 @@
     <div class="body_section">
         <div class="body_section_inner">
 <!-----------------------------------------------------Tạo navbar------------------------------------------------>
-<div class="body_section_inner_left">
-<div class="navbar">
-                    <ul>
-                        <li><i class="fa-solid fa-chart-simple"></i><a href="#"  id="color_highlight">Báo cáo</a></li>
-                            <ul class="navbar_fix1">
-                                <li><a href="index.php?page_layout=phieudonhangtrave">Phiếu đơn hàng trả về</a></li>
-                                <li><a href="index.php?page_layout=bienbanyeucauboithuong">Biên bản yêu cầu bồi thường</a></li>
-                                <li><a href="index.php?page_layout=phieukiemke">Kiểm kho</a></li>
-                                    <ul class="navbar_fix2">
-                                        <li><a href="index.php?page_layout=taophieukiemke"  id="color_highlight">Tạo phiếu kiểm kê</a></li>
-                                        <li><a href="index.php?page_layout=phieukiemke">Phiếu kiểm kê</a></li>
-                                    </ul>
-                            </ul>
-
-                        <li><i class="fa-solid fa-clipboard"></i><a href="#">Phiếu nhập xuất</a></li>
-                        <ul class="navbar_fix1">
-                            <li><a href="index.php?page_layout=phieunhapnvl">Phiếu nhập nguyên vật liệu</a></li>
-                            <li><a href="index.php?page_layout=phieunhapsp">Phiếu nhập sản phẩm</a></li>
-                            <li><a href="index.php?page_layout=phieuxuatnvl">Phiếu xuất nguyên vật liệu</a></li>
-                            <li><a href="index.php?page_layout=phieuxuatsp">Phiếu xuất sản phẩm</a></li>
-                        </ul>
-
-                        <li><i class="fa-solid fa-cart-flatbed"></i><a href="#">Điều phối kho</a></li>
-                        <ul class="navbar_fix1">
-                            <li><a href="index.php?page_layout=dieuphoixuatsp">Điều phối xuất sản phẩm</a></li>
-                            <li><a href="index.php?page_layout=dieuphoixuatnvl">Điều phối xuất nguyên vật liệu</a></li>
-                            <li><a href="index.php?page_layout=dieuphoinhapsp">Điều phối nhập sản phẩm</a></li>
-                            <li><a href="index.php?page_layout=dieuphoinhapnvl">Điều phối nhập nguyên vật liệu</a></li>
-                        </ul>
-
-                        <li><i class="fa-solid fa-warehouse"></i><a href="index.php?page_layout=danhsachkho">Kho</a></li>
-                            <ul class="navbar_fix1">
-                                <li><a href="index.php?page_layout=themkhomoi">Kho mới</a></li>
-                                <li><a href="index.php?page_layout=xoakho">Xóa kho</a></li>
-                                <li><a href="index.php?page_layout=suakho">Sửa kho</a></li>
-                            </ul>
-
-                        <li><i class="fa-solid fa-people-group"></i><a href="index.php?page_layout=danhsachnhanvien">Nhân viên</a></li>
-                            <ul class="navbar_fix1">
-                                <li><a href="index.php?page_layout=themnhanvien">Nhân viên mới</a></li>
-                                <li><a href="index.php?page_layout=xoanhanvien">Xóa nhân viên</a></li>
-                                <li><a href="index.php?page_layout=suanhanvien">Sửa nhân viên</a></li>
-                            </ul>
-                        <li><i class="fa-solid fa-boxes-stacked"></i><a href="">Nguyên vật liệu</a></li>
-
-                        <li><i class="fa-solid fa-tag"></i><a href="index.php?page_layout=timkiemsanpham">Sản phẩm</a></li>
-
-                        <li><i class="fa-solid fa-file-export"></i><a href="index.php?page_layout=thongke">Thống kê</a></li>
-
-                        <li><i class="fa-solid fa-gear"></i></i><a href="#">Cấu hình</a></li>
-
-                        <li><i class="fa-regular fa-circle-question"></i><a href="#">Hỗ trợ</a></li>
-
-                    </ul>
-                </div>
-</div>
+    <?php
+        include_once 'navbar.php';
+    ?>
 <!------------------------------------------------Tạo nội dung--------------------------------------------------->
             <div class="body_section_inner_right">
                 <div><h3><u>Tạo phiếu kiểm kho</u></h3></div>
                 <div><label for="kho"><h4>Chọn kho kiểm kê:</h4></label>
 
-                    <select name="Kho" id="inventory">
-                      <option value="Kho 1">Kho 1</option>
-                      <option value="Kho 2">Kho 2</option>
-                      <option value="Kho 3">Kho 3</option>
-                      <option value="Kho 4">Kho 4</option>
-                      <option value="Kho 5">Kho 5</option>
-                      <option value="Kho 6">Kho 6</option>
-                      <option value="Kho 7">Kho 7</option>
-                      <option value="Kho 8">Kho 8</option>
-                      <option value="Kho 9">Kho 9</option>
-                      <option value="Kho 10">Kho 10</option> 
-                      
-                      </script>
-                    </select></div>
+                <form action="#" method='post' class="form-kho">
+                <select class="form-control" name="kho" id="kho">
+                                <?php
+                                        $conn=mysqli_connect("localhost","root","" ,"nhom2_qlkho");
+                                        $db=mysqli_select_db($conn,"nhom2_qlkho");
+                                        $querykho = 'SELECT * FROM kho';
+                                        $data = mysqli_query($conn, $querykho);
+
+                                        if (!$data) {
+                                            echo 'Data cannot be displayed!';
+                                        } else {
+                                            while ($row = mysqli_fetch_assoc($data)) {
+                                                if($_REQUEST['kho']===$row['MaKho'])
+                                                    echo '<option selected  value="'.$row['MaKho'].'">'.$row['MaKho']." ".$row['TenKho'].'</option>';
+                                                echo '<option  value="'.$row['MaKho'].'">'.$row['MaKho']." ".$row['TenKho'].'</option>';
+                                            }
+                                        }                                        
+                                ?>
+                </select>
+                <input type="submit" name='submit'>
+                </form>
+                <!-- <form action="#" method="post">
+                <select class="form-control" name="TenNVL" id="TenNVL"> -->
+                                <?php
+                                        // $conn=mysqli_connect("localhost","root","" ,"nhom2_qlkho");
+                                        // $db=mysqli_select_db($conn,"nhom2_qlkho");
+                                        // $makho = $_REQUEST['kho'];
+                                        // $queryNVL = "SELECT * FROM nguyenvatlieu as NVL 
+                                        // inner join chitietphieunhapnvl as CT on NVL.MaNVL=CT.MaNVL 
+                                        // inner join kho as K on NVL.MaKho=K.MaKho
+                                        // where NVL.MaKho = $makho";
+                                        // $data = mysqli_query($conn, $queryNVL);
+                                        // if (!$data) {
+                                        //     echo 'Data cannot be displayed!';
+                                        // } else {
+                                        //     while ($row = mysqli_fetch_assoc($data)) {
+                                        //         if($_REQUEST['TenNVL']===$row['TenNVL'])
+                                        //             echo '<option selected  value="'.$row['TenNVL'].'">'.$row['TenNVL'].'</option>';
+                                        //         echo '<option  value="'.$row['TenNVL'].'">'.$row['TenNVL'].'</option>';
+                                        //     }
+                                        // }                                        
+                                ?>
+                <!-- </select>
+                <input type="submit" name= 'chon'>
+                </form> -->
+            </div>
+                <form action="processKK.php" method="post" class="form-kiemke">
                 <table class="table-one">
                     <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Tên</th>
-                            <th>Barecode cua kiện hàng</th>
-                            <th>Số lượng tồn</th>
-                            <th>Khớp</th>
-                            <th>Ghi chú</th>
+                            <th>Kho</th>
+                            <th>Tên nguyên vật liệu</th>
+                            <th>Ngày nhập</th>
+                            <th>Ngày sản xuất</th>
+                            <th>Ngày hết hạn</th>
+                            <th>Số lượng </th>
+                            <th>Số lượng thực tế</th>
+                            <th>Tên nhân viên</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>a</td>
-                            <td>123</td>
-                            <td>10</td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>b</td>
-                            <td>124</td>
-                            <td>10</td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>c</td>
-                            <td>125</td>
-                            <td>10</td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="text"></td>
-                        </tr>
+                        <?php           
+                                        if(isset($_REQUEST['submit'])){
+                                            // $tenNVL0 = $_REQUEST['TenNVL'];
+                                            $kho0 = $_REQUEST['kho'];
+                                            $conn=mysqli_connect("localhost","root","" ,"nhom2_qlkho");
+                                            $db=mysqli_select_db($conn,"nhom2_qlkho");
+                                            $query="SELECT * FROM nguyenvatlieu as NVL 
+                                            inner join chitietphieunhapnvl as CT on NVL.MaNVL=CT.MaNVL 
+                                            inner join kho as K on NVL.MaKho=K.MaKho
+                                            where NVL.MaKho = $kho0";
+                                            $qr1 = "SELECT * FROM nhanvienkho";
+                                            $nhanviendata = mysqli_query($conn, $qr1);
+                                            $data = mysqli_query($conn, $query);
+                                            // var_dump($query);
+                                        while ($a = mysqli_fetch_assoc($data)) {
+                                            echo '<tr>';
+                                            $kho = $a['MaKho'];
+                                            echo "<td> <input name = 'khoKiemKe' value='$kho' disable></td>";
+                                            $ten = $a['TenNVL'];
+                                            echo "<td> <input name = 'tenNVLKiemKe' value='$ten' disable></td>";
+                                            $ngayNhap = $a['NgayNhap'];
+                                            echo "<td> <input name = 'ngayNhapKiemKe' value='$ngayNhap' disable></td>";
+                                            $ngaySX = $a['NgaySX'];
+                                            echo "<td> <input name = 'ngaySXKiemKe' value='$ngaySX' disable></td>";
+                                            $ngayHH = $a['NgayHH'];
+                                            echo "<td> <input name = 'ngayHHKiemKe' value='$ngayHH' disable></td>";
+                                            $soLuong = $a['SoLuong'];
+                                            echo "<td> <input name = 'soLuongHeThong' value='$soLuong' disable></td>";
+                                            echo "<td><input type='number' name = 'soLuongThucTe'></td>";
+                                        }
+                                        echo "<td>";
+                                        echo "<select name='tenNV' id='tenNV'>";
+                                        while ( $b = mysqli_fetch_assoc($nhanviendata)) {
+                                            $tenNV = $b['HoTen'];
+                                            $maNV = $b['MaNhanVien'];
+                                            echo "<option value='".$maNV."-".$tenNV."'>$tenNV</option>";
+                                        }
+                                        echo "</select>
+                                        </td>";
+                                        echo '</tr>';
+
+                                    }
+                                    
+                        ?>
                     </tbody>
                 </table>
                 <div class="press">
-                <input style="background-color: rgb(162, 58, 58);" type="button" value="Hủy">
-                <input style="background-color: green;" type="button" value="Lưu">
+                <input style="background-color: rgb(162, 58, 58);" type="reset" value="Hủy">
+                <input style="background-color: green;" type="submit" name = "submitKiemKe" value="Lưu">
                 </div>
+                </form>
+                
             </div>
         </div>
     </div>

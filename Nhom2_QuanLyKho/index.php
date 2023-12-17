@@ -34,6 +34,16 @@
                 break;
 
             // Phieu nhap xuat
+            case 'phieunhapxuat':include_once './phieuNhapXuat.php';
+                break;
+            case 'dsphieunhapnvl':include_once './DSphieuNhapNVL.php';
+                break;
+            case 'dsphieunhapsp':include_once './DSphieuNhapSP.php';
+                break;  
+            case 'dsphieuxuatnvl':include_once './DSphieuXuatNVL.php';
+                break;
+            case 'dsphieuxuatsp':include_once './DSphieuXuatSP.php';
+                break;                  
             case 'phieunhapnvl':include_once './phieuNhapNVL.php';
                 break;
             case 'phieunhapsp':include_once './phieuNhapSP.php';
@@ -59,6 +69,8 @@
 
             // Tim kiem SP
             case 'timkiemsanpham':include_once './sanPham.php';
+                break;
+            case 'danhsachnguyenvatlieu':include_once './themNVL.php';
                 break;
         }
     }

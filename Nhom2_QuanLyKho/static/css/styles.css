@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
 }
+
 /* ---------------------------------------------------------------------Trang chủ-------------------------------------------------------------------- */
 
 .header{
@@ -133,6 +134,7 @@ i{
     color: rgb(248, 211, 167);
 }
 /* ------------------------------------------Kho.html------------------------------------------------- */
+
 .text_inner_right{
     width: 100%;
     height: 5%;
@@ -180,6 +182,9 @@ i{
 .warehouse_table td{
     text-align: center;
     font-size: 22px;
+}
+.option_warehouse:hover{
+    color: red;
 }
 
 .warehouse_function{
@@ -728,4 +733,25 @@ th{
 }
 .product_detail_group table tr{
     width: 100%;
+}
+/* -------------------------------------NguyenVL-------------------------------------------- */
+.form-kho-filter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form-kho-filter select, .btn-filter-kho, h4{
+    width: 33% !important;
+    /* padding: 10px; */
+    height: 50px;
+    margin: 10px;
+    border-radius: 10px;
+}
+.form-kho-filter .btn-filter-kho, h4{
+    height: 35px;
+    border: 0;
+}
+.form-kho-filter .btn-filter-kho:hover{
+    background-color: rgb(115, 145, 134);
+    color: bisque;
 }

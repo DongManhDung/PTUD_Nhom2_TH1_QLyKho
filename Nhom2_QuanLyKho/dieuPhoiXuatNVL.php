@@ -1,3 +1,25 @@
+<?php
+// connectDB nhom2_quanLyKho
+$mysqli = new mysqli("localhost","root","","nhom2_qlkho");
+
+// Check connection
+if ($mysqli->connect_errno) {
+  echo "Lỗi kết nối MYSQLLi" . $mysqli->connect_error;
+  exit();
+}
+?>
+<?php
+    if(isset($_POST["dieuPhoiXuatNVL"])){
+        $tennvl = $_POST["TenNVL"];
+        $soluong = $_POST["SoLuong"];
+        $dungluong = $_POST["DungLuong"];
+
+
+        $sql_dieuphoixuatnvl = "INSERT INTO `dieuphoixuatnvl`(`TenNVL`, `SoLuong`, `DungLuong`) VALUES ('$nguyenvatlieu','$soluong','$dungluong')";
+        mysqli_query($mysqli,$sql_dieuxuatnvl);
+        header('location: index.php?page_layout=phieuxuatnvl');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +63,7 @@
                                     </ul>
                             </ul>
 
-                        <li><i class="fa-solid fa-clipboard"></i><a href="#">Phiếu nhập xuất</a></li>
+                        <li><i class="fa-solid fa-clipboard"></i><a href="index.php?page_layout=phieunhapxuat">Phiếu nhập xuất</a></li>
                         <ul class="navbar_fix1">
                             <li><a href="index.php?page_layout=phieunhapnvl">Phiếu nhập nguyên vật liệu</a></li>
                             <li><a href="index.php?page_layout=phieunhapsp">Phiếu nhập sản phẩm</a></li>
@@ -70,7 +92,7 @@
                                 <li><a href="index.php?page_layout=xoanhanvien">Xóa nhân viên</a></li>
                                 <li><a href="index.php?page_layout=suanhanvien">Sửa nhân viên</a></li>
                             </ul>
-                        <li><i class="fa-solid fa-boxes-stacked"></i><a href="">Nguyên vật liệu</a></li>
+                        <li><i class="fa-solid fa-boxes-stacked"></i><a href="index.php?page_layout=danhsachnguyenvatlieu">Nguyên vật liệu</a></li>
 
                         <li><i class="fa-solid fa-tag"></i><a href="index.php?page_layout=timkiemsanpham">Sản phẩm</a></li>
 
@@ -85,245 +107,243 @@
 </div>
 <!------------------------------------------------Tạo nội dung--------------------------------------------------->
 <div class="body_section_inner_right">
-    <div class="text_inner_right">
-        <h2>ĐIỀU PHỐI XUẤT NGUYÊN VẬT LIỆU</h2><br>
-        <h3>THÔNG TIN </h3>
-    </div>
-    <div class="form_style">
-        <form action="" target="" >
-            <label for="lname">Kho:</label>
-            <select id="kho" name="kho">
-                <option value="kho1"> 1</option>
-                <option value="kho2"> 2</option>
-                <option value="kho3"> 3</option>
-                <option value="kho4"> 4</option>
-                <option value="kho5"> 5</option>
-                <option value="kho6"> 6</option>
-                <option value="kho7"> 7</option>
-                <option value="kho8"> 8</option>
-                <option value="kho9"> 9</option>
-                <option value="kho10"> 10</option>
-              </select>
-              <label for="ngayLap">Ngày xuất</label>
-              <input type="date" id="ngayNhap" name="ngayNhap"> <br><br>
-            <h2 style="margin-left: 10%;">Danh sách nguyên vật liệu nhập</h2><br><br>
-            <div class="">
+        <div class="text_inner_right">
+            <h2>ĐIỀU PHỐI Xuất NGUYÊN VẬT LIỆU</h2><br>
+            <h3>THÔNG TIN PHIẾU ĐIỀU PHỐI</h3>
+        </div>
+        <div class="form_style">
+            <form action="" target="" >
+                <label for="lname">Kho:</label>
+                <select id="kho" name="kho">
+                    <option value="kho1"> 1</option>
+                    <option value="kho2"> 2</option>
+                    <option value="kho3"> 3</option>
+                    <option value="kho4"> 4</option>
+                    <option value="kho5"> 5</option>
+                </select>
+                <label for="ngayLap">Ngày lập phiếu </label>
+                <input type="date" id="ngayNhap" name="ngayNhap"> <br><br>
+                <h2 style="margin-left: 10%;">Danh sách nguyên vật liệu xuất</h2><br><br>
+                <form action="" method="POST" class="warehouse_from_inner">
+                <div class="">
                 <table border="1" cellpadding="1" cellspacing="1" class="phieu_table">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <p>STT</p>
-                            </td>
-                            <td>
-                                <p>NGUYÊN VẬT LIỆU</p>
-                            </td>
-                            <td>
-                                <p>SỐ LƯỢNG</p>
-                            </td>
-                            <td>
-                                <p>NGAY_SX</p>
-                            </td>
-                            <td>
-                                <p>NGAY_HH</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>1</p>
-                            </td>
-                            <td>
-                                <input list="nvl">
-                                    <datalist id="nvl">
-                                    <option value="Đường">
-                                    <option value="Muối">
-                                    <option value="Bột mì">
-                                    <option value="Chất tạo màu">
-                                    <option value="Vỏ kẹo">
-                                    <option value="Hương liệu">
-                                    <option value="Sữa">
-                                    <option value="Bơ">
-                                    <option value="Dầu thực vật">
-                                    <option value="Siro">
-                                    <option value="Mật ong">
-                                    </datalist>
-                            </td>
-                            <td>
-                                <input type="text"> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name=""> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>2</p>
-                            </td>
-                            <td>
-                                <input list="nvl">
-                            </td>
-                            <td>
-                                <input type="text"> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name=""> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>3</p>
-                            </td>
-                            <td>
-                                <input list="nvl">
-                            </td>
-                            <td>
-                                <input type="text"> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name=""> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>4</p>
-                            </td>
-                            <td>
-                                <input list="nvl">
-                            </td>
-                            <td>
-                                <input type="text"> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name=""> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>5</p>
-                            </td>
-                            <td>
-                                <input list="nvl">
-                            </td>
-                            <td>
-                                <input type="text"> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name=""> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>6</p>
-                            </td>
-                            <td>
-                                <input list="nvl">
-                            </td>
-                            <td>
-                                <input type="text"> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name=""> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>7</p>
-                            </td>
-                            <td>
-                                <input list="nvl">
-                            </td>
-                            <td>
-                                <input type="text"> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name=""> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>8</p>
-                            </td>
-                            <td>
-                                <input list="nvl">
-                            </td>
-                            <td>
-                                <input type="text"> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name=""> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>9</p>
-                            </td>
-                            <td>
-                                <input list="nvl">
-                            </td>
-                            <td>
-                                <input type="text"> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name=""> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>10</p>
-                            </td>
-                            <td>
-                                <input list="nvl">
-                            </td>
-                            <td>
-                                <input type="text"> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name=""> 
-                            </td>
-                            <td>
-                                <input type="date" id="" name="">
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-            </div>
-            <br><br><br><br>
-            <div class="phieu_button">
-                <button style="background-color: green;" type="submit"><b>Xác nhận điều phối</b> </button>
-            </div>
-        </form> 
+                        <tbody>
+                            <tr>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtMaDpxnvl">Mã phiếu :</label>
+                                    <input type="text" name="MaDpxnvl" placeholder="Mã tự tăng dần" readonly>
+                                </div>
+                                <span id="tbEmail" class="warning">*</span> 
+                            </div>  
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtTenNVL">Tên NVL:</label>
+                                    <input type="text" name="TenNVL">
+                                </div>  
+                                <span id="tbEmail" class="warning">*</span> 
+                            </div>                       
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtSoLuong">So Luong:</label>
+                                    <input type="text" name="SoLuong">
+                                </div>  
+                                <span id="tbEmail" class="warning">*</span> 
+                            </div>
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtDungLuong">Dung Luong:</label>
+                                    <input type="text" name="DungLuong">
+                                </div>  
+                                <span id="tbEmail" class="warning">*</span> 
+                            </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtMaDpxnvl"></label>
+                                    <input type="text" name="MaDpxnvl" placeholder="Mã tự tăng dần" readonly>
+</div>  
+                            </div>  
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtTenNVL"></label>
+                                    <input type="text" name="TenNVL">
+                                </div>
+                            </div>                       
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtSoLuong"></label>
+                                    <input type="text" name="SoLuong">
+                                </div>
+                            </div>
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtDungLuong"></label>
+                                    <input type="text" name="DungLuong">
+                                </div> 
+                            </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtMaDpxnvl"></label>
+                                    <input type="text" name="MaDpxnvl" placeholder="Mã tự tăng dần" readonly>
+                                </div>   
+                            </div>  
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtTenNVL"></label>
+                                    <input type="text" name="TenNVL">
+                                </div>  
+                            </div>                       
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtSoLuong"></label>
+                                    <input type="text" name="SoLuong">
+                                </div>  
+                            </div>
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtDungLuong"></label>
+                                    <input type="text" name="DungLuong">
+                                </div>   
+                            </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtMaDpxnvl"></label>
+                                    <input type="text" name="MaDpxnvl" placeholder="Mã tự tăng dần" readonly>
+                                </div> 
+                            </div>  
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtTenNVL"></label>
+                                    <input type="text" name="TenNVL">
+                                </div>  
+                            </div>                       
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtSoLuong"></label>
+                                    <input type="text" name="SoLuong">
+                                </div> 
+                            </div>
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtDungLuong"></label>
+                                    <input type="text" name="DungLuong">
+                                </div> 
+                            </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtMaDpxnvl"></label>
+                                    <input type="text" name="MaDpxnvl" placeholder="Mã tự tăng dần" readonly>
+                                </div>  
+                            </div>  
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtTenNVL"></label>
+                                    <input type="text" name="TenNVL">
+                                </div>  
+                            </div>                       
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtSoLuong"></label>
+                                    <input type="text" name="SoLuong">
+                                </div>  
+                            </div>
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtDungLuong"></label>
+                                    <input type="text" name="DungLuong">
+                                </div> 
+                            </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="MaDpxnvl"></label>
+                                    <input type="text" name="MaDpxnvl" placeholder="Mã tự tăng dần" readonly>
+                                </div> 
+                            </div>  
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtTenNVL"></label>
+                                    <input type="text" name="TenNVL">
+                                </div>
+                            </div>                       
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtSoLuong"></label>
+                                    <input type="text" name="SoLuong">
+                                </div>
+                            </div>
+                                </td>
+                                <td>
+                                <div class="form_group_inner">
+                                <div class="form_group_inner_label_input">
+                                    <label for="txtDungLuong"></label>
+                                    <input type="text" name="DungLuong">
+                                </div>
+                            </div>
+                                </td>
+                            </tr>
+                    <div class="submit">
+                            <button class="btn_submit" name="euphoikho">Xác nhận điều phối</button>
+                        </div>
+                        </form>
+        
     </div>
-    
-</div>
-</div>
-</div>
-</body>
-</html>
-</html>
+    </div>
+    </div>
+    </body>
+    </html> 
+    </html>

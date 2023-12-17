@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
 // connectDB nhom2_quanLyKho
 $mysqli = new mysqli("localhost","root","","nhom2_qlkho");
 
@@ -10,11 +11,10 @@ if ($mysqli->connect_errno) {
 ?>
 
 <?php
-    session_start();
-    if(isset($_POST['search'])){
-        $maKhoCanXoa = $_POST['MaKhoCanXoa'];
-    } 
+    $tenKhoCanXoa = $_POST["tenKhoCanXoa"];
+    $row_LietKe_dsKhoXoa = mysqli_query($mysqli,"SELECT * FROM kho WHERE TenKho LIKE '%$tenKhoCanXoa%'");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +27,10 @@ if ($mysqli->connect_errno) {
     <script src="https://kit.fontawesome.com/a8954462a8.js" crossorigin="anonymous"></script>
     <!-- Add favicon -->
     <link rel="shortcut icon" href="static/img/favicon1.png" type="image/x-icon">
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 </head>
 <body>
     <div class="header">
@@ -58,7 +62,7 @@ if ($mysqli->connect_errno) {
                                     </ul>
                             </ul>
 
-                        <li><i class="fa-solid fa-clipboard"></i><a href="#">Phiếu nhập xuất</a></li>
+                        <li><i class="fa-solid fa-clipboard"></i><a href="index.php?page_layout=phieunhapxuat">Phiếu nhập xuất</a></li>
                         <ul class="navbar_fix1">
                             <li><a href="index.php?page_layout=phieunhapnvl">Phiếu nhập nguyên vật liệu</a></li>
                             <li><a href="index.php?page_layout=phieunhapsp">Phiếu nhập sản phẩm</a></li>
@@ -74,7 +78,7 @@ if ($mysqli->connect_errno) {
                             <li><a href="index.php?page_layout=dieuphoinhapnvl">Điều phối nhập nguyên vật liệu</a></li>
                         </ul>
 
-                        <li><i class="fa-solid fa-warehouse"></i><a href="index.php?page_layout=danhsachkho">Kho</a></li>
+                        <li><i class="fa-solid fa-warehouse"></i><a href="index.php?page_layout=danhsachkho" id="color_highlight">Kho</a></li>
                             <ul class="navbar_fix1">
                                 <li><a href="index.php?page_layout=themkhomoi">Kho mới</a></li>
                                 <li><a href="index.php?page_layout=xoakho" id="color_highlight">Xóa kho</a></li>
@@ -87,7 +91,7 @@ if ($mysqli->connect_errno) {
                                 <li><a href="index.php?page_layout=xoanhanvien">Xóa nhân viên</a></li>
                                 <li><a href="index.php?page_layout=suanhanvien">Sửa nhân viên</a></li>
                             </ul>
-                        <li><i class="fa-solid fa-boxes-stacked"></i><a href="">Nguyên vật liệu</a></li>
+                        <li><i class="fa-solid fa-boxes-stacked"></i><a href="index.php?page_layout=danhsachnguyenvatlieu">Nguyên vật liệu</a></li>
 
                         <li><i class="fa-solid fa-tag"></i><a href="index.php?page_layout=timkiemsanpham">Sản phẩm</a></li>
 
@@ -108,54 +112,102 @@ if ($mysqli->connect_errno) {
                     
                     <div class="search_warehouse">
                         <div class="search_warehouse_inner">
-                            <form action="" method="POST" style="width:100%;display:inline-flex;justify-content:right">
-                            <h3>Nhập mã kho cần xóa:</h3>
-                            <input type="text" method="POST" name="MaKhoCanXoa" placeholder="Mã kho: ">
-                            <button name="search" style="margin-left:1rem;width:10%;font-size:20px;border-radius:5px;cursor:pointer" method="POST">Tìm kiếm</button>
+                            <form action="xoaKho.php" method="POST" style="width:100%;display:inline-flex;justify-content:right">
+                            <h3>Nhập tên kho cần tìm:</h3>
+                            <input type="text" method="POST"  id="tenKhoCanXoa" name="tenKhoCanXoa" placeholder="">
+                            <button name="search" id="search" style="margin-left:1rem;width:10%;font-size:20px;border-radius:5px;cursor:pointer" method="POST">Tìm kiếm</button>
+                            
                             </form>
                         </div>
                     </div>
-                    
+                    <div class="scanQR" style="width: 100%;display: flex;justify-content: right;height: auto;">
+                            <label for="" style="margin-right:10px">Hoặc đưa mã QR vào đây: </label>
+                            <video src=""  id="preview" style="width:400px;height:200px;border:1px solid black"></video>
+                    </div>
+                    <form action="xoaKho.php" method="POST">
                     <table class="warehouse_table" cellspacing="0">
                         <thead>
                             <tr>
                                 <td>Mã kho</td>
                                 <td>Tên kho</td>
                                 <td>Địa chỉ</td>
-                                <td>Diện tích</td>
+                                <td>Dung lượng</td>
                                 <td>Mã nhân viên</td>
+                                <td>Thao tác</td>
                             </tr>
                             
                         </thead>
                         <!-- Chua co so du lieu kho -->
                         <tbody>
                             <?php
-                                $row_LietKe_dsKho = mysqli_query($mysqli,"SELECT * FROM kho WHERE MaKho LIKE '%$maKhoCanXoa%'");
-                               
-                                while($row = mysqli_fetch_array($row_LietKe_dsKho)){
+                                while($row = mysqli_fetch_array($row_LietKe_dsKhoXoa)){
+                                    
                             ?>
                                 <tr>
                                     <td name="maKhoDcLay"><?php echo $row['MaKho']; ?></td>
                                     <td name="tenKhoDcLay"><?php echo $row['TenKho']; ?></td>
                                     <td name="diaChiKhoDcLay"><?php echo $row['DiaChi']; ?></td>
-                                    <td name=""><?php echo $row['DienTich']; ?></td>
+                                    <td name=""><?php echo $row['DungLuong']; ?></td>
                                     <td name=""><?php echo $row['MaNhanVien']; ?></td>
+                                    <th>
+                                        <a class="option-warehouse" href="CtrlXoaKho.php?MaKho=<?php echo $row['MaKho']?>" class="deleteWarehouse_btn" name="xoakhoo">Xóa kho</a>
+                                    </th>
                                 </tr>
                             <?php
                                 }
                             ?>
                         </tbody>
                     </table>
-
-                    <div class="warehouse_function">
-                        <div class="warehouse_function_inner">
-                            <div class="warehouse_delete_function">
-                                <button class="deleteWarehouse_btn" name="submit">Xóa kho</button>
+                    
+                        <!-- <div class="warehouse_function">
+                            <div class="warehouse_function_inner">
+                                <div class="warehouse_delete_function">
+                                    
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </div> -->
+                </form>
+
             </div>
         </div>
     </div>
+    <script>
+        let scanner = new Instascan.Scanner({ video: document.getElementById('preview')});
+        Instascan.Camera.getCameras().then(function(cameras){
+            if(cameras.length > 0){
+                scanner.start(cameras[0]);
+            }
+            else{
+                alert('No webcam found');
+            }  
+        }).catch(function(e){
+            console.error(e);
+        });
+
+        scanner.addListener('scan',function(c){
+            document.getElementById('tenKhoCanXoa').value=c;
+            document.forms[0].submit();
+        });
+    </script>
+
+
+    <style>
+        .option-warehouse{
+            text-decoration:none;
+            font-size:18px
+        }
+        .option-warehouse:hover{
+            color:red;
+        }
+    </style>
+
+<script>
+    function addAudio(){
+        var audio = new Audio('scanner_sound.mp3');
+        audio.play();
+    }
+    document.getElementById('search').addEventListener("click",addAudio);
+</script>
 </body>
+
 </html>

@@ -44,7 +44,7 @@
                                     </ul>
                             </ul>
 
-                        <li><i class="fa-solid fa-clipboard"></i><a href="#">Phiếu nhập xuất</a></li>
+                        <li><i class="fa-solid fa-clipboard"></i><a href="index.php?page_layout=phieunhapxuat">Phiếu nhập xuất</a></li>
                         <ul class="navbar_fix1">
                             <li><a href="index.php?page_layout=phieunhapnvl">Phiếu nhập nguyên vật liệu</a></li>
                             <li><a href="index.php?page_layout=phieunhapsp">Phiếu nhập sản phẩm</a></li>
@@ -73,7 +73,7 @@
                                 <li><a href="index.php?page_layout=xoanhanvien">Xóa nhân viên</a></li>
                                 <li><a href="index.php?page_layout=suanhanvien">Sửa nhân viên</a></li>
                             </ul>
-                        <li><i class="fa-solid fa-boxes-stacked"></i><a href="">Nguyên vật liệu</a></li>
+                        <li><i class="fa-solid fa-boxes-stacked"></i><a href="index.php?page_layout=danhsachnguyenvatlieu">Nguyên vật liệu</a></li>
 
                         <li><i class="fa-solid fa-tag"></i><a href="index.php?page_layout=timkiemsanpham">Sản phẩm</a></li>
 
